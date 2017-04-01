@@ -2,9 +2,10 @@
  * Created by Mak on 2017/4/1.
  */
 import React, {Component} from 'react';
-import {List, InputItem, WhiteSpace, TextareaItem, Picker, Button,Toast} from 'antd-mobile';
-import {district, provinceLite as province} from 'antd-mobile-demo-data';
+import {List, InputItem, WhiteSpace, TextareaItem, Picker, Button, Toast} from 'antd-mobile';
+import {district} from 'antd-mobile-demo-data';
 import {createForm} from 'rc-form';
+import axios from 'axios';
 import './style.less';
 
 const yys = [
@@ -38,19 +39,28 @@ const gzxx = [
 
 ];
 
-function loadingToast() {
-    Toast.loading('加载中...', 5, () => {
-        Toast.success('加载成功!!!', 1);
-    });
-}
-
 class Report extends Component {
     submit = () => {
         this.props.form.validateFields((error, value) => {
             console.log(error, value);
-            loadingToast();
+
+            if (error) return false;
+
+            Toast.loading('加载中...');
+
+            axios.post('/user', value).then(function (response) {
+                console.log(response);
+                Toast.hide();
+                Toast.success('提交成功!!!', 1);
+            }).catch(function (error) {
+                console.log(error);
+                Toast.hide();
+                Toast.offline('网络连接失败!!!', 1);
+            }).done(function () {
+
+            });
         });
-    }
+    };
 
     render() {
         const {getFieldProps, getFieldError} = this.props.form;
@@ -64,7 +74,7 @@ class Report extends Component {
                 <List renderHeader={() => '联系信息'}>
                     <InputItem {...getFieldProps('name', {
                         rules: [{required: true}],
-                    })} clear placeholder="请输入你的姓名"  error={!!getFieldError('name')}>姓名</InputItem>
+                    })} clear placeholder="请输入你的姓名" error={!!getFieldError('name')}>姓名</InputItem>
                     <InputItem {...getFieldProps('phone', {
                         rules: [{required: true}],
                     })} clear placeholder="请输入你的手机号码" type="phone"
