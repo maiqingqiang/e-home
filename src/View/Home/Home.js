@@ -26,6 +26,11 @@ const data = [
         text: '关于',
         href: '/about'
     },
+    {
+        icon: about,
+        text: '管理后台',
+        href: '/admin'
+    },
 ];
 
 const Home = () => (

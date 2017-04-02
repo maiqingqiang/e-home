@@ -19,7 +19,7 @@ class Details extends Component {
                     <Card>
                         <Card.Header
                             title="yz771078386"
-                            thumb={complete}
+                            thumb={wait}
                             extra={<span>等待接单</span>}
                         />
                         <Card.Body>
