@@ -2,12 +2,13 @@
  * Created by Mak on 2017/4/1.
  */
 import React from 'react';
-import {Grid} from 'antd-mobile';
+import {Grid, Icon} from 'antd-mobile';
 import {Link} from 'react-router-dom';
 import './style.less';
-import install from './../../Static/install.svg';
-import desc from './../../Static/desc.svg';
-import about from './../../Static/about.svg';
+import install from './../../Static/svg/install.svg';
+import desc from './../../Static/svg/desc.svg';
+import about from './../../Static/svg/about.svg';
+
 
 const data = [
     {
@@ -18,7 +19,7 @@ const data = [
     {
         icon: desc,
         text: '报修详情',
-        href: '/about'
+        href: '/details'
     },
     {
         icon: about,
@@ -36,7 +37,8 @@ const Home = () => (
         <Grid data={data} columnNum={3}
               renderItem={(dataItem, index) => (
                   <Link to={dataItem.href} className="grid__a">
-                      <img src={dataItem.icon} className="grid__img" alt={dataItem.text}/>
+                      {/*<img src={dataItem.icon} className="grid__img" alt={dataItem.text}/>*/}
+                      <Icon type={dataItem.icon} className="icon"/>
                       <div className="grid__title">{dataItem.text}</div>
                   </Link>
               )}/>

@@ -1,15 +1,17 @@
 /**
  * Created by Mak on 2017/4/1.
  */
-import React, {Component} from 'react';
+import React from 'react';
 import {List, InputItem, WhiteSpace, TextareaItem, Picker, Button, Toast} from 'antd-mobile';
+import {NavBar} from './../../Component/index';
 import {district} from 'antd-mobile-demo-data';
 import {createForm} from 'rc-form';
 import axios from 'axios';
 import './style.less';
+import { shouldComponentUpdate } from 'react-immutable-render-mixin';
+
 
 const yys = [
-
     {
         label: '中国电信',
         value: '1',
@@ -22,7 +24,6 @@ const yys = [
         label: '中国移动',
         value: '3',
     },
-
 ];
 
 
@@ -39,7 +40,12 @@ const gzxx = [
 
 ];
 
-class Report extends Component {
+class Report extends React.Component {
+    constructor(props) {
+        super(props);
+        this.shouldComponentUpdate = shouldComponentUpdate.bind(this);
+    }
+
     submit = () => {
         this.props.form.validateFields((error, value) => {
             console.log(error, value);
@@ -66,11 +72,7 @@ class Report extends Component {
         const {getFieldProps, getFieldError} = this.props.form;
         return (
             <div className="Report">
-                <div className="common__hd">
-                    <h1 className="common__title">宽带报修</h1>
-                    <p className="common__desc">只需要填写以下信息,即可马上报修</p>
-                </div>
-
+                <NavBar>宽带报修</NavBar>
                 <List renderHeader={() => '联系信息'}>
                     <InputItem {...getFieldProps('name', {
                         rules: [{required: true}],
@@ -86,6 +88,10 @@ class Report extends Component {
                     >
                         <List.Item error={!!getFieldError('district')} arrow="horizontal">地点</List.Item>
                     </Picker>
+                    <InputItem {...getFieldProps('room', {
+                        rules: [{required: true}],
+                    })} clear placeholder="请输入你的房号"
+                               error={!!getFieldError('room')}>房号</InputItem>
                 </List>
 
                 <List renderHeader={() => '宽带信息'}>

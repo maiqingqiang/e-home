@@ -1,28 +1,34 @@
 'use strict';
 
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var paths = require('./paths');
-var getClientEnvironment = require('./env');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const paths = require('./paths');
+const getClientEnvironment = require('./env');
 const pxtorem = require('postcss-pxtorem');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
+const svgDirs = [
+    require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. 属于 antd-mobile 内置 svg 文件
+    paths.appSrc
+    // path.resolve(__dirname, 'src/my-project-svg-foler'),  // 2. 自己私人的 svg 存放目录
+];
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = paths.servedPath;
+const publicPath = paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
-var shouldUseRelativeAssetPaths = publicPath === './';
+const shouldUseRelativeAssetPaths = publicPath === './';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-var publicUrl = publicPath.slice(0, -1);
+const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
+const env = getClientEnvironment(publicUrl);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -173,13 +179,14 @@ module.exports = {
                 loader: 'json'
             },
             // "file" loader for svg
-            {
-                test: /\.svg$/,
-                loader: 'file',
-                query: {
-                    name: 'static/media/[name].[hash:8].[ext]'
-                }
-            }
+            { test: /\.(svg)$/i, loader: 'svg-sprite', include: svgDirs},
+            // {
+            //     test: /\.svg$/,
+            //     loader: 'file',
+            //     query: {
+            //         name: 'static/media/[name].[hash:8].[ext]'
+            //     }
+            // }
             // ** STOP ** Are you adding a new loader?
             // Remember to add the new extension(s) to the "url" loader exclusion list.
         ]
@@ -218,6 +225,12 @@ module.exports = {
                 minifyURLs: true
             }
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            // filename: 'js/vendor_vue.js',
+            filename: 'static/js/vendor_react.js',
+
+        }),
         // Makes some environment variables available to the JS code, for example:
         // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
         // It is absolutely essential that NODE_ENV was set to production here.
@@ -246,9 +259,19 @@ module.exports = {
         // Generate a manifest file which contains a mapping of all asset filenames
         // to their corresponding output file so that tools can pick it up without
         // having to parse `index.html`.
+        // new webpack.LoaderOptionsPlugin({
+        //     minimize: true,
+        // }),
         new ManifestPlugin({
             fileName: 'asset-manifest.json'
-        })
+        }),
+        new CompressionWebpackPlugin({
+            asset: "[path].gz[query]",
+            algorithm: 'gzip',
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8,
+        }),
     ],
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
