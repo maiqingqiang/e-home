@@ -6,4 +6,5 @@
 - Ant-design-mobile
 - Axios
 - Create-react-app
+- Webpack 2
  
