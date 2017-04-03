@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "anser": "^1.2.7",
     "antd-mobile": "^1.0.7",
     "antd-mobile-demo-data": "^0.1.4",
     "axios": "^0.16.0",
@@ -22,6 +23,7 @@
     "react-dom": "^15.4.2",
     "react-immutable-render-mixin": "^0.9.7",
     "react-router-dom": "^4.0.0",
+    "stack-frame-resolver": "^0.1.5",
     "svg-sprite-loader": "^0.3.0",
     "systemjs": "^0.20.11"
   },
