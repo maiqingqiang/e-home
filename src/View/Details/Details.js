@@ -3,17 +3,17 @@
  */
 import React, {Component} from 'react';
 import {Card, WingBlank, WhiteSpace, Button} from 'antd-mobile';
-import complete from './../../Static/svg/complete.png';
+// import complete from './../../Static/svg/complete.png';
 import wait from './../../Static/svg/wait.png';
-import processing from './../../Static/svg/processing.png';
-import {NavBar} from './../../Component/index';
+// import processing from './../../Static/svg/processing.png';
+import Nav from './../../Component/NavBar/Nav';
 import './style.less';
 
 class Details extends Component {
     render() {
         return (
             <div className="Details">
-                <NavBar>报修详情</NavBar>
+                <Nav>报修详情</Nav>
                 <WingBlank>
                     <WhiteSpace size="lg"/>
                     <Card>

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Home from './../Home/Home';
-import Report from './../Report/Report';
-import Details from './../Details/Details';
-import NoMatch from './../NoMatch/NoMatch';
-import Admin from './../Admin/Admin';
-import Warn from './../Warn/Warn';
+import Home from './View/Home/Home';
+import Report from './View/Report/Report';
+import Details from './View/Details/Details';
+import NoMatch from './View/NoMatch/NoMatch';
+import Admin from './View/Admin/Admin';
+import Warn from './View/Warn/Warn';
 import './style.less';
 import { shouldComponentUpdate } from 'react-immutable-render-mixin';
 
@@ -34,6 +34,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         )
     )}/>
 );
+
 
 class App extends Component {
 
