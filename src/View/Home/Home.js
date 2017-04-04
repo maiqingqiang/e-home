@@ -19,7 +19,7 @@ const data = [
     {
         icon: desc,
         text: '报修详情',
-        href: '/details'
+        href: '/detail_list'
     },
     {
         icon: about,

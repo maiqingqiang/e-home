@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch,Redirect} from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Home from './View/Home/Home';
 import Report from './View/Report/Report';
+import DetailList from './View/DetailList/DetailList';
 import Details from './View/Details/Details';
 import NoMatch from './View/NoMatch/NoMatch';
 import Admin from './View/Admin/Admin';
@@ -58,6 +59,7 @@ class App extends Component {
                                     <Route exact path="/" component={Home}/>
                                     <Route path="/report" component={Report}/>
                                     <Route path="/details" component={Details}/>
+                                    <Route path="/detail_list" component={DetailList}/>
                                     <Route path="/warn" component={Warn}/>
                                     <PrivateRoute path="/admin" component={Admin}/>
                                     <Route component={NoMatch}/>

@@ -2,8 +2,8 @@
  * Created by Mak on 2017/4/1.
  */
 import React from 'react';
-import {NavBar,List, InputItem, WhiteSpace, TextareaItem, Picker, Button, Toast} from 'antd-mobile';
-import Nav from './../../Component/NavBar/Nav';
+import {List, InputItem, WhiteSpace, TextareaItem, Picker, Button, Toast} from 'antd-mobile';
+import {NavBar} from './../../Component/index';
 import {district} from 'antd-mobile-demo-data';
 import {createForm} from 'rc-form';
 import axios from 'axios';
@@ -72,9 +72,7 @@ class Report extends React.Component {
         const {getFieldProps, getFieldError} = this.props.form;
         return (
             <div className="Report">
-                {/*<Nav>宽带报修</Nav>*/}
-                <NavBar leftContent="返回" mode="light"
-                        onLeftClick={() => this.context.router.history.goBack()}>宽带报修</NavBar>
+                <NavBar>宽带报修</NavBar>
                 <List renderHeader={() => '联系信息'}>
                     <InputItem {...getFieldProps('name', {
                         rules: [{required: true}],
